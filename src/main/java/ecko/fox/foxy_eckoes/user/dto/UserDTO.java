@@ -24,7 +24,10 @@ public class UserDTO {
                 user.getFirstName(),
                 user.getLastName(),
                 user.getEmail(),
-                user.getBookings().stream().map((booking -> BookingDTO.fromBooking(booking))),
+                user.getBookings()
+                        .stream()
+                        .map((BookingDTO::fromBooking))
+                        .toList(),
                 user.getRole()
         );
     }
