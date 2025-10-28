@@ -1,8 +1,8 @@
-package ecko.fox.foxy_eckoes.user;
+package ecko.fox.foxy_eckoes.user.dto;
 
 import ecko.fox.foxy_eckoes.booking.BookingDTO;
+import ecko.fox.foxy_eckoes.user.User;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.UUID;
