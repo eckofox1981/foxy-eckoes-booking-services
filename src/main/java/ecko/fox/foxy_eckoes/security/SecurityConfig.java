@@ -5,6 +5,7 @@ import ecko.fox.foxy_eckoes.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -31,7 +32,9 @@ public class SecurityConfig {
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         auth -> auth
-                                .anyRequest().permitAll()
+                                .requestMatchers(HttpMethod.POST, "/user/create").permitAll()
+                                .requestMatchers(HttpMethod.PUT, "/user/login").permitAll()
+                                .anyRequest().authenticated()
                 )
                 .oauth2Login(oAuth2 -> oAuth2.successHandler(oaUth2SuccessHandler))
                 .addFilterAfter(new JWTFilter(jwtService, userRepository), OAuth2LoginAuthenticationFilter.class);
