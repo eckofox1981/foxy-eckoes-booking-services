@@ -5,6 +5,7 @@ import ecko.fox.foxy_eckoes.security.JWTService;
 import ecko.fox.foxy_eckoes.security.PasswordConfig;
 import ecko.fox.foxy_eckoes.user.dto.CreateDTO;
 import ecko.fox.foxy_eckoes.user.dto.LoginDTO;
+import ecko.fox.foxy_eckoes.user.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -57,6 +58,21 @@ public class UserService implements UserDetailsService {
 
     public User getUserInfo(User user) {
         return user;
+    }
+
+    public User updateUserInfo(User user, UserDTO userDTO) throws IllegalArgumentException {
+        Optional<User> userNameExist = repository.findByUsername(userDTO.getUsername());
+
+        if (userNameExist.isPresent() && !user.getUsername().equals(userDTO.getUsername())) {
+            throw new IllegalArgumentException("Username unavailable");
+        }
+
+        user.setUsername(userDTO.getUsername());
+        user.setFirstName(userDTO.getFirstName());
+        user.setLastName(userDTO.getLastName());
+        user.setEmail(userDTO.getEmail());
+
+        return repository.save(user);
     }
 
     private boolean passwordValidation(String password, String passwordConfirm) {

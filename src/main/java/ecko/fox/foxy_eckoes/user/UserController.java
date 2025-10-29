@@ -55,4 +55,16 @@ public class UserController {
             return ResponseEntity.internalServerError().body("Error: " + e.getMessage());
         }
     }
+
+    @PutMapping("/update")
+    public ResponseEntity<?> updateUserInfo(@AuthenticationPrincipal User user, @RequestBody UserDTO userDTO) {
+        try {
+            UserDTO updatedUser = UserDTO.fromUser(service.updateUserInfo(user, userDTO));
+            return ResponseEntity.ok(updatedUser);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(403).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }
