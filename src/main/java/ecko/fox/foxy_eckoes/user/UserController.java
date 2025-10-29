@@ -1,8 +1,9 @@
 package ecko.fox.foxy_eckoes.user;
 
+import ecko.fox.foxy_eckoes.user.dto.CreateDTO;
 import ecko.fox.foxy_eckoes.user.dto.LoginDTO;
 import ecko.fox.foxy_eckoes.user.dto.UserDTO;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,13 +11,21 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/user")
+@RequiredArgsConstructor
 public class UserController {
-    private UserService service;
+    private final UserService service;
+
+    //TODO: remove
+    @GetMapping("/ping")
+    public ResponseEntity<?> ping() {
+        return ResponseEntity.ok("ping");
+    }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createUser(@RequestBody User user, @RequestBody String passwordConfirm) {
+    public ResponseEntity<?> createUser(@RequestBody CreateDTO userCreated) {
         try {
-            return ResponseEntity.ok(service.createUser(user, passwordConfirm));
+            User user = service.createUser(userCreated);
+            return ResponseEntity.ok(UserDTO.fromUser(user));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(406).body(e.getMessage());
         } catch (Exception e) {

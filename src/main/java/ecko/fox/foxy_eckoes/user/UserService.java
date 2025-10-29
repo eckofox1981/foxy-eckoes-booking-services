@@ -1,24 +1,44 @@
 package ecko.fox.foxy_eckoes.user;
 
+import ecko.fox.foxy_eckoes.booking.Booking;
+import ecko.fox.foxy_eckoes.security.JWTService;
+import ecko.fox.foxy_eckoes.security.PasswordConfig;
+import ecko.fox.foxy_eckoes.user.dto.CreateDTO;
 import ecko.fox.foxy_eckoes.user.dto.LoginDTO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class UserService implements UserDetailsService {
-    private UserRepository repository;
+    private final UserRepository repository;
+    private final PasswordConfig passwordConfig;
+    private final JWTService jwtService;
 
 
-    public User createUser(User user, String password) throws IllegalArgumentException {
-        if (!passwordValidation(user.getPasswordHash(), password)) {
+    public User createUser(CreateDTO userCreated) throws IllegalArgumentException {
+        if (!passwordValidation(userCreated.getPassword(), userCreated.getPasswordConfirm())) {
             throw new IllegalArgumentException("Passwords do not match or chosen password is ineligible");
         }
+
+        User user = new User(UUID.randomUUID(),
+                userCreated.getUsername(),
+                passwordConfig.passwordEncoder().encode(userCreated.getPassword()),
+                userCreated.getFirstName(),
+                userCreated.getLastName(),
+                userCreated.getEmail(),
+                "user");
 
         return repository.save(user);
     }
@@ -28,12 +48,11 @@ public class UserService implements UserDetailsService {
                 .findByUsername(loginDTO.getUsername())
                 .orElseThrow(()-> new NoSuchElementException("unable to login, please check username and password"));
 
-        //TODO: change to proper password check
-        if (!loginDTO.getPassword().equals(user.getPasswordHash())) {
+        if (!passwordConfig.passwordEncoder().matches(loginDTO.getPassword(), user.getPasswordHash())) {
             throw new NoSuchElementException("unable to login, please check username and password");
         }
-        //TODO: implement JWT
-        return "jwtToken";
+
+        return jwtService.generateToken(user.getUserID());
     }
 
     private boolean passwordValidation(String password, String passwordConfirm) {
@@ -41,6 +60,7 @@ public class UserService implements UserDetailsService {
             return false;
         }
         return (password.length() > 5 && password.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z0-9]+$"));
+        //lower and uppercase, digit, more than 5 char
     }
 
     @Override

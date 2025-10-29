@@ -7,13 +7,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
-@Entity(name = "foxy-users")
+@Entity(name = "foxy_users")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -38,18 +40,31 @@ public class User implements UserDetails {
     @Column
     private String openId;
     @Column
-    private String OpenIdProvider;
+    private String openIdProvider;
+
+    public User(UUID userID, String username, String passwordHash, String firstName, String lastName, String email, String role) {
+        this.userID = userID;
+        this.username = username;
+        this.passwordHash = passwordHash;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.role = role;
+        this.openId = "";
+        this.openIdProvider = "none";
+        this.bookings = new ArrayList<>();
+    }
 
     public User(UUID userID, String username, String openId, String openIdProvider) {
         this.userID = userID;
         this.username = username;
         this.openId = openId;
-        OpenIdProvider = openIdProvider;
+        this.openIdProvider = openIdProvider;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return List.of(new SimpleGrantedAuthority("ROLE_" + role.toUpperCase()));
     }
 
     @Override
