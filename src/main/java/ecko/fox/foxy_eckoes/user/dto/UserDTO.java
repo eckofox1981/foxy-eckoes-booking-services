@@ -3,11 +3,13 @@ package ecko.fox.foxy_eckoes.user.dto;
 import ecko.fox.foxy_eckoes.booking.BookingDTO;
 import ecko.fox.foxy_eckoes.user.User;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 
 import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
+@Data
 public class UserDTO {
     private UUID userId;
     private String username;
@@ -32,6 +34,7 @@ public class UserDTO {
                 user.getRole(),
                 user.getOpenIdProvider()
         );
+
     }
 }
 
