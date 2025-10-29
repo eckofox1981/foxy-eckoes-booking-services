@@ -27,11 +27,11 @@ public class UserController {
     @PutMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO) {
         try {
-            ResponseEntity.ok(service.login(loginDTO));
+            return ResponseEntity.ok(service.login(loginDTO));
         } catch (NoSuchElementException e) {
-            ResponseEntity.status(403).body(e.getMessage());
+            return ResponseEntity.status(403).body(e.getMessage());
         } catch (Exception e) {
-            ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 }

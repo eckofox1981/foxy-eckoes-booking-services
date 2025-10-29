@@ -16,6 +16,7 @@ public class UserDTO {
     private String email;
     private List<BookingDTO> bookings;
     private String role;
+    private String openIdProvider;
 
     public static UserDTO fromUser(User user) {
         return new UserDTO(
@@ -28,7 +29,8 @@ public class UserDTO {
                         .stream()
                         .map((BookingDTO::fromBooking))
                         .toList(),
-                user.getRole()
+                user.getRole(),
+                user.getOpenIdProvider()
         );
     }
 }
