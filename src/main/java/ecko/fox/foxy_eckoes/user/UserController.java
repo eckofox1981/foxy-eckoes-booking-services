@@ -67,4 +67,13 @@ public class UserController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteUser(@AuthenticationPrincipal User user) {
+        try {
+            return ResponseEntity.status(204).body(service.deleteUser(user));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Deletion error: " + e.getMessage());
+        }
+    }
 }

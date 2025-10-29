@@ -75,6 +75,11 @@ public class UserService implements UserDetailsService {
         return repository.save(user);
     }
 
+    public String deleteUser(User user) {
+        repository.delete(user);
+        return "Account deleted.";
+    }
+
     private boolean passwordValidation(String password, String passwordConfirm) {
         if (!password.equals(passwordConfirm)) {
             return false;
