@@ -5,6 +5,7 @@ import ecko.fox.foxy_eckoes.user.dto.LoginDTO;
 import ecko.fox.foxy_eckoes.user.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.NoSuchElementException;
@@ -41,6 +42,17 @@ public class UserController {
             return ResponseEntity.status(403).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/info")
+    public ResponseEntity<?> getUserInfo(@AuthenticationPrincipal User user) {
+        try {
+            UserDTO userDTO = UserDTO.fromUser(service.getUserInfo(user));
+            System.out.println(userDTO.getFirstName());
+            return ResponseEntity.ok(userDTO);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("Error: " + e.getMessage());
         }
     }
 }

@@ -55,6 +55,10 @@ public class UserService implements UserDetailsService {
         return jwtService.generateToken(user.getUserID());
     }
 
+    public User getUserInfo(User user) {
+        return user;
+    }
+
     private boolean passwordValidation(String password, String passwordConfirm) {
         if (!password.equals(passwordConfirm)) {
             return false;
