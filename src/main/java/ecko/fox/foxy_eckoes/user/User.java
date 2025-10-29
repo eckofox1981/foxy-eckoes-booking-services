@@ -33,7 +33,7 @@ public class User implements UserDetails {
     private String lastName;
     @Column(unique = true)
     private String email;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Booking> bookings;
     @Column
     private String role;
