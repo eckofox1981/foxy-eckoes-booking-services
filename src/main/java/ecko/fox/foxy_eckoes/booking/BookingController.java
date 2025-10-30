@@ -54,4 +54,17 @@ public class BookingController {
             return ResponseEntity.badRequest().body("Could not fetch booking:" + e.getMessage());
         }
     }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<?>  deleteBooking(@AuthenticationPrincipal User user, @RequestParam UUID bookingID) {
+        try {
+            return ResponseEntity.status(204).body(service.deleteBooking(user, bookingID));
+        } catch (IllegalAccessException e) {
+            return ResponseEntity.status(401).body("Error deleting: " + e.getMessage());
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(404).body("Error deleting: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error deleting: " + e.getMessage());
+        }
+    }
 }
