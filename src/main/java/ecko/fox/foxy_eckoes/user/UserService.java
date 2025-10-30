@@ -56,8 +56,13 @@ public class UserService implements UserDetailsService {
         return jwtService.generateToken(user.getUserID());
     }
 
-    public User getUserInfo(User user) {
-        return user;
+    public User getUserInfo(User user) throws NoSuchElementException {
+        //fetches fresh database user to allow fresh booking state
+        Optional<User> userResponse = repository.findById(user.getUserID());
+        if (!userResponse.isPresent()) {
+            throw new NoSuchElementException("User not found");
+        }
+        return userResponse.get();
     }
 
     public User updateUserInfo(User user, UserDTO userDTO) throws IllegalArgumentException {

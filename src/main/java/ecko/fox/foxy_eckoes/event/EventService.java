@@ -62,8 +62,8 @@ public class EventService {
         return "Event: " + response + ", was deleted.";
     }
 
-    public Event updateSeatsLefts(EventDTO eventDTO, int seatsBooked) throws IllegalQueryOperationException {
-        Event event = getEventById(eventDTO.getEventId());
+    public Event updateSeatsLefts(UUID eventID, int seatsBooked) throws IllegalQueryOperationException {
+        Event event = getEventById(eventID);
 
         int seatsAvailable = event.getNumberOfSeatsLeft();
 

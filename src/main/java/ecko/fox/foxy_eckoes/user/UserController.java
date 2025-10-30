@@ -3,6 +3,7 @@ package ecko.fox.foxy_eckoes.user;
 import ecko.fox.foxy_eckoes.user.dto.CreateDTO;
 import ecko.fox.foxy_eckoes.user.dto.LoginDTO;
 import ecko.fox.foxy_eckoes.user.dto.UserDTO;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -45,6 +46,7 @@ public class UserController {
         }
     }
 
+    @Transactional
     @GetMapping("/info")
     public ResponseEntity<?> getUserInfo(@AuthenticationPrincipal User user) {
         try {

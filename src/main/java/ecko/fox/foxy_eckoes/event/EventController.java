@@ -80,9 +80,9 @@ public class EventController {
     }
 
     @PutMapping("/update-seats-left")
-    public ResponseEntity<?> updateSeatsLeft(@RequestBody EventDTO eventToUpdate, @RequestParam int seatsBooked) {
+    public ResponseEntity<?> updateSeatsLeft(@RequestParam UUID eventID, @RequestParam int seatsBooked) {
         try {
-            EventDTO eventDTO = EventDTO.fromEvent(service.updateSeatsLefts(eventToUpdate, seatsBooked));
+            EventDTO eventDTO = EventDTO.fromEvent(service.updateSeatsLefts(eventID, seatsBooked));
             return ResponseEntity.ok(eventDTO);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
