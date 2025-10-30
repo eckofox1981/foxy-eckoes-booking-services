@@ -1,5 +1,6 @@
-package ecko.fox.foxy_eckoes.event;
+package ecko.fox.foxy_eckoes.event.dto;
 
+import ecko.fox.foxy_eckoes.event.Event;
 import lombok.AllArgsConstructor;
 
 import java.util.Date;

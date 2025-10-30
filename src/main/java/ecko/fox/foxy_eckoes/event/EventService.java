@@ -7,4 +7,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class EventService {
     private final EventRepository repository;
+
+    public Event createEvent(){
+        return new Event();
+    }
 }
