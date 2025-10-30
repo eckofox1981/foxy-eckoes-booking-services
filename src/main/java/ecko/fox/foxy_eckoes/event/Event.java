@@ -25,6 +25,8 @@ public class Event {
     @Column
     private String description;
     @Column
+    private String location;
+    @Column
     private String pictureUrl;
     @Column
     private List<String> tags;
@@ -35,11 +37,12 @@ public class Event {
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Booking> bookings;
 
-    public Event(UUID eventID, Date date, String performer, String description, String pictureUrl, List<String> tags, int numberOfSeats, int numberOfSeatsLeft, List<Booking> bookings) {
+    public Event(UUID eventID, Date date, String performer, String description, String location, String pictureUrl, List<String> tags, int numberOfSeats, int numberOfSeatsLeft, List<Booking> bookings) {
         this.eventID = eventID;
         this.date = date;
         this.performer = performer;
         this.description = description;
+        this.location = location;
         if (pictureUrl.isEmpty()) {
             this.pictureUrl = "https://images.unsplash.com/photo-1573152958734-1922c188fba3?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Y29uY2VydCUyMGNyb3dkfGVufDB8fDB8fHww&fm=jpg&q=60&w=3000";
         } else {

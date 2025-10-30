@@ -16,6 +16,7 @@ public class NewEventDTO {
     private Date date;
     private String performer;
     private String description;
+    private String Location;
     private String pictureUrl;
     private List<String> tags;
     private int numberOfSeats;
