@@ -34,6 +34,10 @@ public class SecurityConfig {
                         auth -> auth
                                 .requestMatchers(HttpMethod.POST, "/user/create").permitAll()
                                 .requestMatchers(HttpMethod.PUT, "/user/login").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/event/create").hasRole("admin")
+                                .requestMatchers(HttpMethod.DELETE, "/event/cancel").hasRole("admin")
+                                .requestMatchers(HttpMethod.DELETE, "/event/update").hasRole("admin")
+                                .requestMatchers(HttpMethod.GET, "event/*").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .oauth2Login(oAuth2 -> oAuth2.successHandler(oaUth2SuccessHandler))
