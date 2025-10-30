@@ -16,7 +16,7 @@ public class NewEventDTO {
     private Date date;
     private String performer;
     private String description;
-    private String Location;
+    private String location;
     private String pictureUrl;
     private List<String> tags;
     private int numberOfSeats;
@@ -27,6 +27,7 @@ public class NewEventDTO {
                 this.date,
                 this.performer,
                 this.description,
+                this.location,
                 this.pictureUrl,
                 this.tags,
                 this.numberOfSeats,

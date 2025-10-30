@@ -1,13 +1,17 @@
 package ecko.fox.foxy_eckoes.event.dto;
 
+import ecko.fox.foxy_eckoes.booking.Booking;
 import ecko.fox.foxy_eckoes.event.Event;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
+@Data
 public class EventDTO {
     private UUID eventId;
     private Date date;
@@ -33,6 +37,19 @@ public class EventDTO {
                 event.getNumberOfSeatsLeft(),
                 event.getBookings().size()
         );
+    }
+
+    public Event updateEvent(Event eventToUpdate) {
+        eventToUpdate.setDate(this.date);
+        eventToUpdate.setPerformer(this.performer);
+        eventToUpdate.setDescription(this.description);
+        eventToUpdate.setLocation(this.location);
+        eventToUpdate.setPictureUrl(this.pictureUrl);
+        eventToUpdate.setTags(this.tags);
+        eventToUpdate.setNumberOfSeats(this.numberOfSeats);
+        eventToUpdate.setNumberOfSeatsLeft(this.numberOfSeatsLeft);
+
+        return eventToUpdate;
     }
 
 }
