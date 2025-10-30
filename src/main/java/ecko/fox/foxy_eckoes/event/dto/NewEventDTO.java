@@ -3,6 +3,7 @@ package ecko.fox.foxy_eckoes.event.dto;
 import ecko.fox.foxy_eckoes.booking.Booking;
 import ecko.fox.foxy_eckoes.event.Event;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 public class NewEventDTO {
     private Date date;
     private String performer;

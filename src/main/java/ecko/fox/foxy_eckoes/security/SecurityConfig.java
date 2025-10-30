@@ -16,6 +16,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -29,14 +30,15 @@ public class SecurityConfig {
                                            JWTService jwtService,
                                            OAUth2SuccessHandler oaUth2SuccessHandler,
                                            UserRepository userRepository) throws Exception {
-        httpSecurity.csrf(AbstractHttpConfigurer::disable)
+        httpSecurity
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         auth -> auth
                                 .requestMatchers(HttpMethod.POST, "/user/create").permitAll()
                                 .requestMatchers(HttpMethod.PUT, "/user/login").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/event/create").hasRole("admin")
-                                .requestMatchers(HttpMethod.DELETE, "/event/cancel").hasRole("admin")
-                                .requestMatchers(HttpMethod.DELETE, "/event/update").hasRole("admin")
+                                .requestMatchers(HttpMethod.POST, "/event/create").hasAuthority("ROLE_ADMIN")
+                                .requestMatchers(HttpMethod.DELETE, "/event/cancel").hasAuthority("ROLE_ADMIN")
+                                .requestMatchers(HttpMethod.DELETE, "/event/update").hasAuthority("ROLE_ADMIN")
                                 .requestMatchers(HttpMethod.GET, "event/*").permitAll()
                                 .anyRequest().authenticated()
                 )

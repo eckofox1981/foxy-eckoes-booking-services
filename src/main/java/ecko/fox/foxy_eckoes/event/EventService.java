@@ -34,6 +34,7 @@ public class EventService {
                                             // unnecessary for so few expected tags
     public List<Event> filterEvents(EventFilterDTO filterParams) {
         //TODO: if time create specific repository function for filtering
+        //DOESNT FILTER!
         List<Event> events = getAllEvents();
         return events.stream()
                 .filter(event -> filterParams.getFromDate() == null ||

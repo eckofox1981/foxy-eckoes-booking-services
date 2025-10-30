@@ -52,7 +52,7 @@ public class UserService implements UserDetailsService {
         if (!passwordConfig.passwordEncoder().matches(loginDTO.getPassword(), user.getPasswordHash())) {
             throw new NoSuchElementException("unable to login, please check username and password");
         }
-
+        System.out.println("login: user: " + user.getUsername() + user.getAuthorities());
         return jwtService.generateToken(user.getUserID());
     }
 

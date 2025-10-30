@@ -49,7 +49,6 @@ public class UserController {
     public ResponseEntity<?> getUserInfo(@AuthenticationPrincipal User user) {
         try {
             UserDTO userDTO = UserDTO.fromUser(service.getUserInfo(user));
-            System.out.println(userDTO.getFirstName());
             return ResponseEntity.ok(userDTO);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body("Error: " + e.getMessage());
