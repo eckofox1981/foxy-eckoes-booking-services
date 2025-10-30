@@ -5,11 +5,10 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @RestController
@@ -26,6 +25,33 @@ public class BookingController {
             return ResponseEntity.ok(bookingDTO);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error while booking: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/id")
+    public ResponseEntity<?> getUserBookingById(@AuthenticationPrincipal User user, @RequestParam UUID bookingID) {
+        try {
+            BookingDTO bookingDTO = BookingDTO.fromBooking(service.getUserBookingById(user, bookingID));
+            return ResponseEntity.ok(bookingDTO);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(401).body("Error: " + e.getMessage());
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(404).body("Not found:" + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Could not fetch booking:" + e.getMessage());
+        }
+    }
+
+    @GetMapping("/get-all-user")
+    public ResponseEntity<?> getAllUserBookings(@AuthenticationPrincipal User user) {
+        try {
+            List<BookingDTO> bookings = service.getAllUserBookings(user)
+                    .stream()
+                    .map(BookingDTO::fromBooking)
+                    .toList();
+            return ResponseEntity.ok(bookings);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Could not fetch booking:" + e.getMessage());
         }
     }
 }

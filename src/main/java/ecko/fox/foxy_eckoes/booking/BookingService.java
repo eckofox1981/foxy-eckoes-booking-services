@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.awt.print.Book;
+import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @Service
@@ -27,6 +29,24 @@ public class BookingService {
         eventService.updateSeatsLefts(eventID, numberOfTickets);
 
         return repository.save(booking);
+    }
+
+    public Booking getUserBookingById(User user, UUID bookingId) throws IllegalAccessException, NoSuchElementException {
+        Booking booking = repository.findById(bookingId).orElseThrow(()-> new NoSuchElementException("Bolling not found."));
+
+        if (user.getRole().equalsIgnoreCase("admin")) {
+            return booking;
+        }
+
+        if (!booking.getUser().getUserID().equals(user.getUserID())) {
+            throw new IllegalAccessException("You are not allowed to access this booking.");
+        }
+
+        return booking;
+    }
+
+    public List<Booking> getAllUserBookings(User user) throws NoSuchElementException {
+        return repository.findAllByUser(user).orElseThrow(()-> new NoSuchElementException("No bookings found."));
     }
 
 }
