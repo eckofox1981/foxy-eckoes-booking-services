@@ -12,6 +12,7 @@ public class EventDTO {
     private Date date;
     private String performer;
     private String description;
+    private String pictureUrl;
     private List<String> tags;
     private int numberOfSeats;
     private int numberOfSeatsLeft;
@@ -23,6 +24,7 @@ public class EventDTO {
                 event.getDate(),
                 event.getPerformer(),
                 event.getDescription(),
+                event.getPictureUrl(),
                 event.getTags(),
                 event.getNumberOfSeats(),
                 event.getNumberOfSeatsLeft(),
