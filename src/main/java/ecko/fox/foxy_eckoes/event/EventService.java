@@ -23,12 +23,16 @@ public class EventService {
     }
 
     public List<Event> getAllEvents() {
-        return repository.findAll();
+        List<Event> events = repository.findAll();
+        if (events.size() == 0) {
+            throw new NoSuchElementException("No events listed.");
+        }
+        return events;
     }
 
     @SuppressWarnings("SlowListContainsAll") //removes warning for tags filtering since 'new HashSet'
                                             // unnecessary for so few expected tags
-    public List<Event> filterEvent(EventFilterDTO filterParams) {
+    public List<Event> filterEvents(EventFilterDTO filterParams) {
         //TODO: if time create specific repository function for filtering
         List<Event> events = getAllEvents();
         return events.stream()
