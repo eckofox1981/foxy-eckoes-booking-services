@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
 import java.util.UUID;
 
 @Entity(name = "bookings")
@@ -26,4 +27,8 @@ public class Booking {
     private User user;
     @Column
     private int numberOfTickets;
+    @Column
+    private Status status;
+    @Column
+    private Date dateCreated;
 }

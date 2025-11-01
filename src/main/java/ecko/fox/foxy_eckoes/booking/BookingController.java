@@ -3,6 +3,7 @@ package ecko.fox.foxy_eckoes.booking;
 import ecko.fox.foxy_eckoes.user.User;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.query.IllegalQueryOperationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,8 @@ public class BookingController {
         try {
             BookingDTO bookingDTO = BookingDTO.fromBooking(service.bookEvent(user, eventID, numberOfTickets));
             return ResponseEntity.ok(bookingDTO);
+        } catch (IllegalQueryOperationException e) {
+            return ResponseEntity.status(409).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error while booking: " + e.getMessage());
         }
@@ -55,16 +58,29 @@ public class BookingController {
         }
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<?>  deleteBooking(@AuthenticationPrincipal User user, @RequestParam UUID bookingID) {
+    @PutMapping("/cancel")
+    public ResponseEntity<?> cancelBooking(@AuthenticationPrincipal User user, @RequestParam UUID bookingID) {
+        try {
+            return ResponseEntity.ok(service.cancelBooking(user, bookingID));
+        } catch (IllegalAccessException e) {
+            return ResponseEntity.status(401).body("Error cancelling: " + e.getMessage());
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(404).body("Error cancelling: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error cancelling: " + e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/delete") //admin only
+    public ResponseEntity<?> deleteBooking(@AuthenticationPrincipal User user, @RequestParam UUID bookingID) {
         try {
             return ResponseEntity.status(204).body(service.deleteBooking(user, bookingID));
         } catch (IllegalAccessException e) {
-            return ResponseEntity.status(401).body("Error deleting: " + e.getMessage());
+            return ResponseEntity.status(401).body("Error cancelling: " + e.getMessage());
         } catch (NoSuchElementException e) {
-            return ResponseEntity.status(404).body("Error deleting: " + e.getMessage());
+            return ResponseEntity.status(404).body("Error cancelling: " + e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error deleting: " + e.getMessage());
+            return ResponseEntity.badRequest().body("Error cancelling: " + e.getMessage());
         }
     }
 }
