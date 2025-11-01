@@ -39,6 +39,8 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.POST, "/event/create").hasAuthority("ROLE_ADMIN")
                                 .requestMatchers(HttpMethod.DELETE, "/event/cancel").hasAuthority("ROLE_ADMIN")
                                 .requestMatchers(HttpMethod.DELETE, "/event/update").hasAuthority("ROLE_ADMIN")
+                                .requestMatchers(HttpMethod.DELETE, "/booking/delete").hasAuthority("ROLE_ADMIN")
+                                .requestMatchers(HttpMethod.PUT, "/event/control-all-event-availability").hasAuthority("ROLE_ADMIN")
                                 .requestMatchers(HttpMethod.GET, "event/*").permitAll()
                                 .anyRequest().authenticated()
                 )
