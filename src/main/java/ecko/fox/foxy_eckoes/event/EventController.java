@@ -98,4 +98,13 @@ public class EventController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @PutMapping("/control-all-event-availability")
+    public ResponseEntity<?> seatAvailibilityControlAllEvent() {
+        try {
+            return ResponseEntity.ok(service.seatAvailabilityControlAllEvent());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }

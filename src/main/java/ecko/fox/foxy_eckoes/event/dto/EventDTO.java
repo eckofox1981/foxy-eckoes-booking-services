@@ -1,11 +1,9 @@
 package ecko.fox.foxy_eckoes.event.dto;
 
-import ecko.fox.foxy_eckoes.booking.Booking;
 import ecko.fox.foxy_eckoes.event.Event;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;

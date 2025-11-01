@@ -1,8 +1,8 @@
 package ecko.fox.foxy_eckoes.event;
 
 import ecko.fox.foxy_eckoes.booking.Booking;
+import ecko.fox.foxy_eckoes.booking.Status;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -33,7 +33,7 @@ public class Event {
     @Column
     private int numberOfSeats;
     @Column
-    private int NumberOfSeatsLeft;
+    private int numberOfSeatsLeft;
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Booking> bookings;
 
@@ -50,7 +50,24 @@ public class Event {
         }
         this.tags = tags;
         this.numberOfSeats = numberOfSeats;
-        NumberOfSeatsLeft = numberOfSeatsLeft;
+        this.numberOfSeatsLeft = numberOfSeatsLeft;
         this.bookings = bookings;
+    }
+
+    public int seatAvailabilityControl() {
+        int seatsBookedInDB = 0;
+        int diff = 0;
+        for (Booking booking : this.bookings) {
+            if (booking.getStatus().equals(Status.CONFIRMED)) {
+                seatsBookedInDB += booking.getNumberOfTickets();
+            }
+        }
+
+        if (this.numberOfSeatsLeft != (this.numberOfSeats - seatsBookedInDB)) {
+            diff += Math.abs(this.numberOfSeatsLeft - (this.numberOfSeats - seatsBookedInDB));
+            this.setNumberOfSeatsLeft(this.numberOfSeats - seatsBookedInDB);
+        }
+
+        return diff;
     }
 }

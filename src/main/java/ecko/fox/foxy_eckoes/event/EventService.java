@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 public class EventService {
     private final EventRepository repository;
 
+
     public Event createEvent(NewEventDTO newEventDTO){
         Event event = newEventDTO.saveEvent();
         return repository.save(event);
@@ -79,5 +80,21 @@ public class EventService {
         Event event = getEventById(eventDTO.getEventId());
         eventDTO.updateEvent(event);
         return repository.save(event);
+    }
+
+    public String seatAvailabilityControlAllEvent() {
+        List<Event> allEvents = repository.findAll();
+        int eventsUpdated = 0;
+        int diff = 0;
+        for (Event event : allEvents) {
+            int thisDiff = event.seatAvailabilityControl();
+            if (thisDiff > 0) {
+                repository.save(event);
+                eventsUpdated ++;
+                diff += thisDiff;
+            }
+        }
+
+        return "Number of updated events: " + eventsUpdated + ". " + diff + " seat discrepancies fixed.";
     }
 }
