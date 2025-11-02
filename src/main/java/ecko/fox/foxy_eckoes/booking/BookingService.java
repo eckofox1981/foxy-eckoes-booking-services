@@ -89,7 +89,7 @@ public class BookingService {
         String response = "Booking for " + booking.getEvent().getPerformer()
                 + " in " + booking.getEvent().getLocation() + " has been cancelled.";
 
-        if (!user.getRole().equalsIgnoreCase("admin")) { //TODO: hasAuthority check in SecurityConfig
+        if (!user.getRole().equalsIgnoreCase("admin")) {
             throw new IllegalAccessException("You are not allowed to delete this booking.");
         }
 
@@ -105,6 +105,22 @@ public class BookingService {
 
     public List<Booking> getAllBookingForEvent(Event event) throws NoSuchElementException {
         return repository.findAllByEvent(event).orElseThrow(()-> new NoSuchElementException("No booking founds."));
+    }
+
+    public Booking updateBooking(User user, UUID bookingID, int newNumberOfTickets)
+            throws NoSuchElementException, IllegalAccessException, IllegalArgumentException {
+        Booking booking = repository.findById(bookingID).orElseThrow(() -> new NoSuchElementException("Booking not found."));
+        Event event = eventService.getEventById(booking.getEvent().getEventID());
+
+        if (!booking.getUser().getUserID().equals(user.getUserID())) {
+            throw new IllegalAccessException("You are not allowed to update this booking.");
+        }
+
+        int diffInBookedTickets = booking.getNumberOfTickets() - newNumberOfTickets;
+        eventService.updateSeatsLefts(event.getEventID(), diffInBookedTickets);
+        booking.setNumberOfTickets(newNumberOfTickets);
+
+        return repository.save(booking);
     }
 
 }

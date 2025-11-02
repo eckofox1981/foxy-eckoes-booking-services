@@ -83,4 +83,18 @@ public class BookingController {
             return ResponseEntity.badRequest().body("Error cancelling: " + e.getMessage());
         }
     }
+
+    @PutMapping("/update")
+    public ResponseEntity<?> updateBooking(@AuthenticationPrincipal User user, @RequestParam UUID bookingID, @RequestParam int numberOfTickets) {
+        try {
+            BookingDTO bookingDTO = BookingDTO.fromBooking(service.updateBooking(user, bookingID, numberOfTickets));
+            return ResponseEntity.ok(bookingDTO);
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(404).body("Update error: " + e.getMessage());
+        } catch (IllegalAccessException e) {
+            return ResponseEntity.status(401).body("Update error: " + e.getMessage());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(405).body("Update error: " + e.getMessage());
+        }
+    }
 }
