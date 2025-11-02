@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.query.IllegalQueryOperationException;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
@@ -28,7 +29,12 @@ public class EventService {
         if (events.size() == 0) {
             throw new NoSuchElementException("No events listed.");
         }
-        return events;
+
+
+
+        return events.stream()
+                .sorted(Comparator.comparing(Event::getDate))
+                .toList();
     }
 
     @SuppressWarnings("SlowListContainsAll") //removes warning for tags filtering since 'new HashSet'
