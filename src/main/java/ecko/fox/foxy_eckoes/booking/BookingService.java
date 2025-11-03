@@ -40,7 +40,7 @@ public class BookingService {
     }
 
     public Booking getUserBookingById(User user, UUID bookingId) throws IllegalAccessException, NoSuchElementException {
-        Booking booking = repository.findById(bookingId).orElseThrow(()-> new NoSuchElementException("Bolling not found."));
+        Booking booking = repository.findById(bookingId).orElseThrow(()-> new NoSuchElementException("Booking not found."));
 
         if (user.getRole().equalsIgnoreCase("admin")) {
             return booking;
