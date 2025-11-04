@@ -7,6 +7,7 @@ import ecko.fox.foxy_eckoes.user.User;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.query.IllegalQueryOperationException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.MethodNotAllowedException;
 
 import java.util.Date;
 import java.util.List;
@@ -114,6 +115,10 @@ public class BookingService {
 
         if (!booking.getUser().getUserID().equals(user.getUserID())) {
             throw new IllegalAccessException("You are not allowed to update this booking.");
+        }
+
+        if (booking.getStatus().equals(Status.CANCELLED)) {
+            throw new IllegalArgumentException("You cannot update cancelled events");
         }
 
         int diffInBookedTickets = booking.getNumberOfTickets() - newNumberOfTickets;
