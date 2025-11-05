@@ -43,7 +43,7 @@ public class EventController {
         }
     }
 
-    @GetMapping("/filter")
+    @PostMapping("/filter") //NOTE: GET-method should not have a body
     public ResponseEntity<?> filterEvents(@RequestBody EventFilterDTO eventFilterDTO) {
         try {
             List<EventDTO> eventDTOs = service.filterEvents(eventFilterDTO)
