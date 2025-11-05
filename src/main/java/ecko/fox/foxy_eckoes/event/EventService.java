@@ -7,10 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.query.IllegalQueryOperationException;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,20 +38,55 @@ public class EventService {
                                             // unnecessary for so few expected tags
     public List<Event> filterEvents(EventFilterDTO filterParams) {
         //TODO: if time create specific repository function for filtering
-        //DOESNT FILTER!
         List<Event> events = getAllEvents();
+
+        //following makes sure empty string are not recognized as strings (obviously wouldn't math)
+        if (filterParams.getLocation() != null && filterParams.getLocation().trim().isEmpty()) {
+            filterParams.setLocation(null);
+        }
+        if (filterParams.getPerformer() != null && filterParams.getPerformer().trim().isEmpty()) {
+            filterParams.setPerformer(null);
+        }
+
+        //quality checks each of the tags before submitting them to the stream-filtering of events
+        List<String> tags = null;
+        if (filterParams.getTags() != null) {
+            tags = filterParams.getTags().stream()
+                    .filter(Objects::nonNull)
+                    .map(String::trim)
+                    .filter(s -> !s.isEmpty())
+                    .map(String::toLowerCase)
+                    .collect(Collectors.toList());
+            if (tags.isEmpty()) {
+                tags = null;
+            }
+        }
+
+        List<String> filterTags = tags;
+
         return events.stream()
                 .filter(event -> filterParams.getFromDate() == null ||
                         event.getDate().after(filterParams.getFromDate()))
                 .filter(event -> filterParams.getToDate() == null ||
                         event.getDate().before(filterParams.getToDate()))
                 .filter(event -> filterParams.getPerformer() == null ||
-                        event.getPerformer().equals(filterParams.getPerformer()))
+                        event.getPerformer().equalsIgnoreCase(filterParams.getPerformer()))
                 .filter(event -> filterParams.getLocation() == null ||
                         event.getLocation().equalsIgnoreCase(filterParams.getLocation()))
-                .filter(event -> filterParams.getTags() == null ||
-                        filterParams.getTags().isEmpty() ||
-                        event.getTags().containsAll(filterParams.getTags()))
+                // inside the stream, replace the tag filter with:
+                .filter(event -> {
+                    if (filterTags == null) return true;
+                    List<String> eventTags = event.getTags();
+                    if (eventTags == null) return false;
+                    Set<String> eventTagSet = eventTags.stream()
+                            .filter(Objects::nonNull)
+                            .map(String::trim)
+                            .filter(s -> !s.isEmpty())
+                            .map(String::toLowerCase)
+                            .collect(Collectors.toSet());
+                    return filterTags.stream().anyMatch(eventTagSet::contains);
+                })
+
                 .collect(Collectors.toList());
     }
 
