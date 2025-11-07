@@ -97,4 +97,19 @@ public class BookingController {
             return ResponseEntity.status(405).body("Update error: " + e.getMessage());
         }
     }
+
+    @GetMapping("/get-bookings-by-userId")
+    public ResponseEntity<?> getBookingsByUserId(@RequestParam UUID userID){
+        try {
+            List<BookingDTO> bookings = service.getBookingsByUserId(userID)
+                    .stream()
+                    .map(BookingDTO::fromBooking)
+                    .toList();
+            return ResponseEntity.ok(bookings);
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(404).body("Error finding bookings:" + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error finding bookings:" + e.getMessage());
+        }
+    }
 }

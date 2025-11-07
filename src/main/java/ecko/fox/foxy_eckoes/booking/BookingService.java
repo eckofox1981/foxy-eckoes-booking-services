@@ -4,9 +4,12 @@ import ecko.fox.foxy_eckoes.event.Event;
 import ecko.fox.foxy_eckoes.event.EventRepository;
 import ecko.fox.foxy_eckoes.event.EventService;
 import ecko.fox.foxy_eckoes.user.User;
+import ecko.fox.foxy_eckoes.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.query.IllegalQueryOperationException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.MethodNotAllowedException;
 
 import java.util.Date;
@@ -20,6 +23,7 @@ public class BookingService {
     private final BookingRepository repository;
     private final EventService eventService;
     private final EventRepository eventRepository;
+    private final UserRepository userRepository;
 
     public Booking bookEvent(User user, UUID eventID, int numberOfTickets) throws IllegalQueryOperationException{
         Event event = eventService.getEventById(eventID);
@@ -126,6 +130,12 @@ public class BookingService {
         booking.setNumberOfTickets(newNumberOfTickets);
 
         return repository.save(booking);
+    }
+
+    public List<Booking> getBookingsByUserId(@RequestParam UUID userID) throws NoSuchElementException{
+        User user = userRepository.findById(userID).orElseThrow(() -> new NoSuchElementException("User not found"));
+
+        return repository.findAllByUser(user).orElseThrow(() -> new NoSuchElementException("Could not find bookings."));
     }
 
 }

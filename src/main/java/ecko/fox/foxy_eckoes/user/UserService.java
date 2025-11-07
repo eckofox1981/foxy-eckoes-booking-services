@@ -89,6 +89,10 @@ public class UserService implements UserDetailsService {
         return userList;
     }
 
+    public User getUserById(UUID userId) throws NoSuchElementException {
+        return repository.findById(userId).orElseThrow(() -> new NoSuchElementException("ID: " + userId+ " not found"));
+    }
+
     private boolean passwordValidation(String password, String passwordConfirm) {
         if (!password.equals(passwordConfirm)) {
             return false;

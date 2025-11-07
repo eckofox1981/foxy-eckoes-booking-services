@@ -10,6 +10,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.NoSuchElementException;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/user")
@@ -84,6 +85,17 @@ public class UserController {
             return ResponseEntity.ok(service.getAllUserIDAndUserName());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/get-by-id")
+    public ResponseEntity<?> getUserById(@RequestParam UUID userId){
+        try {
+            return ResponseEntity.ok(service.getUserById(userId));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(404).body("Error fetching user:" + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error fetching user:" + e.getMessage());
         }
     }
 }
