@@ -77,4 +77,13 @@ public class UserController {
             return ResponseEntity.badRequest().body("Deletion error: " + e.getMessage());
         }
     }
+
+    @GetMapping("/get-all-usernames-and-id")
+    public ResponseEntity<?> getAllusers() {
+        try {
+            return ResponseEntity.ok(service.getAllUserIDAndUserName());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }

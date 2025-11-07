@@ -1,5 +1,6 @@
 package ecko.fox.foxy_eckoes.event;
 
+import ecko.fox.foxy_eckoes.event.dto.ControllReport;
 import ecko.fox.foxy_eckoes.event.dto.EventDTO;
 import ecko.fox.foxy_eckoes.event.dto.EventFilterDTO;
 import ecko.fox.foxy_eckoes.event.dto.NewEventDTO;
@@ -120,8 +121,9 @@ public class EventService {
         return repository.save(event);
     }
 
-    public String seatAvailabilityControlAllEvent() {
+    public ControllReport seatAvailabilityControlAllEvent() {
         List<Event> allEvents = repository.findAll();
+        List<String> updatedEventList = new ArrayList<>();
         int eventsUpdated = 0;
         int diff = 0;
         for (Event event : allEvents) {
@@ -130,9 +132,11 @@ public class EventService {
                 repository.save(event);
                 eventsUpdated ++;
                 diff += thisDiff;
+                updatedEventList.add(event.getPerformer() + ", " + event.getLocation() + ", " + event.getDate() + " => " + thisDiff + " changes made.");
             }
         }
 
-        return "Number of updated events: " + eventsUpdated + ". " + diff + " seat discrepancies fixed.";
+        String text = "Number of updated events: " + eventsUpdated + ". " + diff + " seat discrepancies fixed.";
+        return new ControllReport(updatedEventList, text);
     }
 }

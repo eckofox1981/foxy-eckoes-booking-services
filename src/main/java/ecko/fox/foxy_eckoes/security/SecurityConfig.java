@@ -43,6 +43,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.POST, "/user/create").permitAll()
                                 .requestMatchers(HttpMethod.PUT, "/user/login").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/event/filter").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/user/get-all-usernames-and-id").hasAuthority("ROLE_ADMIN")
                                 .requestMatchers(HttpMethod.POST, "/event/create").hasAuthority("ROLE_ADMIN")
                                 .requestMatchers(HttpMethod.DELETE, "/event/cancel").hasAuthority("ROLE_ADMIN")
                                 .requestMatchers(HttpMethod.DELETE, "/event/update").hasAuthority("ROLE_ADMIN")

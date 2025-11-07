@@ -1,24 +1,17 @@
 package ecko.fox.foxy_eckoes.user;
 
-import ecko.fox.foxy_eckoes.booking.Booking;
 import ecko.fox.foxy_eckoes.security.JWTService;
 import ecko.fox.foxy_eckoes.security.PasswordConfig;
 import ecko.fox.foxy_eckoes.user.dto.CreateDTO;
 import ecko.fox.foxy_eckoes.user.dto.LoginDTO;
 import ecko.fox.foxy_eckoes.user.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -83,6 +76,17 @@ public class UserService implements UserDetailsService {
     public String deleteUser(User user) {
         repository.delete(user);
         return "Account deleted.";
+    }
+
+    public HashMap<String, String> getAllUserIDAndUserName() {
+        List<User> allUsers = repository.findAll();
+        HashMap<String, String> userList = new HashMap<>();
+
+        for (User user : allUsers) {
+            userList.put(user.getUserID().toString(), user.getUsername());
+        }
+
+        return userList;
     }
 
     private boolean passwordValidation(String password, String passwordConfirm) {

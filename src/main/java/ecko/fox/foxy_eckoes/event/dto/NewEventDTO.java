@@ -24,6 +24,7 @@ public class NewEventDTO {
     private int numberOfSeats;
 
     public Event saveEvent() {
+        System.out.println(this.description);
         return new Event(
                 UUID.randomUUID(),
                 this.date,
