@@ -92,7 +92,7 @@ public class BookingService {
         Booking booking = repository.findById(bookingID).orElseThrow(()-> new NoSuchElementException("Booking not found."));
         Event event = eventService.getEventById(booking.getEvent().getEventID());
         String response = "Booking for " + booking.getEvent().getPerformer()
-                + " in " + booking.getEvent().getLocation() + " has been cancelled.";
+                + " in " + booking.getEvent().getLocation() + " has been deleted.";
 
         if (!user.getRole().equalsIgnoreCase("admin")) {
             throw new IllegalAccessException("You are not allowed to delete this booking.");

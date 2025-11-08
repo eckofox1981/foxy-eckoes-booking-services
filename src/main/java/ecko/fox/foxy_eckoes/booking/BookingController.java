@@ -74,7 +74,7 @@ public class BookingController {
     @DeleteMapping("/delete") //admin only
     public ResponseEntity<?> deleteBooking(@AuthenticationPrincipal User user, @RequestParam UUID bookingID) {
         try {
-            return ResponseEntity.status(204).body(service.deleteBooking(user, bookingID));
+            return ResponseEntity.ok(service.deleteBooking(user, bookingID));
         } catch (IllegalAccessException e) {
             return ResponseEntity.status(401).body("Error cancelling: " + e.getMessage());
         } catch (NoSuchElementException e) {
