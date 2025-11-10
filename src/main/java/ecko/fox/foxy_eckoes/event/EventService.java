@@ -158,7 +158,7 @@ public class EventService {
                     "The Mosty Not Dead Tour: even though iconic drummer Charlie Watts died four years ago, the rest of the band are still grabbing their walker to deambulate onto a stage near you",
                     "Scandinavium, Gothenburg, Sweden",
                     "https://cdn.artphotolimited.com/images/5a0af3030d0f835b8cacac95/300x300/the-rolling-stones-en-concert-a-paris-2003.jpg",
-                    List.of("rockN'roll", "rock", "stones", "Scandinavium", "Gothenburg", "Sweden", "MickJagger"),
+                    List.of("rockn'roll", "rock", "stones", "Scandinavium", "Gothenburg", "Sweden", "MickJagger"),
                     50000
             ).saveEvent();
 
@@ -168,7 +168,7 @@ public class EventService {
                     "The multi-Grammy winner brings her haunting vocals and captivating stage presence on her world tour.",
                     "Royal Arena, Copenhagen, Denmark",
                     "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Billie_Eilish_2019_by_Glenn_Francis.jpg/300px-Billie_Eilish_2019_by_Glenn_Francis.jpg",
-                    List.of("pop", "alternative pop", "Billie Eilish", "Copenhagen", "Denmark"),
+                    List.of("pop", "alternativepop", "BillieEilish", "Copenhagen", "Denmark"),
                     12500
             ).saveEvent();
 
@@ -178,7 +178,7 @@ public class EventService {
                     "The Eras Tour continues! Experience a spectacular journey through Taylor's entire discography with stunning visuals and surprise songs.",
                     "Parken Stadium, Copenhagen, Denmark",
                     "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/191125_Taylor_Swift_at_the_2019_American_Music_Awards_%28cropped%29.png/300px-191125_Taylor_Swift_at_the_2019_American_Music_Awards_%28cropped%29.png",
-                    List.of("pop", "country pop", "Taylor Swift", "Copenhagen", "Denmark", "Eras Tour"),
+                    List.of("pop", "countrypop", "TaylorSwift", "Copenhagen", "Denmark", "ErasTour"),
                     38000
             ).saveEvent();
 
@@ -188,7 +188,7 @@ public class EventService {
                     "Rock royalty Foo Fighters bring their high-energy performance and decades of hits to Scandinavia.",
                     "Hartwall Arena, Helsinki, Finland",
                     "https://media.gettyimages.com/id/75264785/photo/london-dave-grohl-of-foo-fighters-performs-on-stage-during-the-live-earth-concert-at-wembley.jpg?s=612x612&w=0&k=20&c=hovSzNq6xO9OhOrt56LWVGtCclJHbdazS39PA_qeANI=",
-                    List.of("rock", "alternative rock", "Foo Fighters", "Helsinki", "Finland", "Dave Grohl"),
+                    List.of("rock", "alternativerock", "FooFighters", "Helsinki", "Finland", "DaveGrohl"),
                     13506
             ).saveEvent();
 
@@ -198,7 +198,7 @@ public class EventService {
                     "Heavy metal legends deliver an explosive evening of thrash metal classics and new material from their 72 Seasons album.",
                     "Telenor Arena, Oslo, Norway",
                     "https://contentf5.dailynewshungary.com/wp-content/uploads/2025/06/metallica-concert.jpg",
-                    List.of("metal", "heavy metal", "thrash metal", "Metallica", "Oslo", "Norway"),
+                    List.of("metal", "heavymetal", "thrashmetal", "Metallica", "Oslo", "Norway"),
                     23000
             ).saveEvent();
 
@@ -208,7 +208,7 @@ public class EventService {
                     "The Mathematics Tour brings Ed Sheeran's intimate storytelling and loop pedal mastery to the stage with songs spanning his entire career.",
                     "Scandinavium, Gothenburg, Sweden",
                     "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Ed_Sheeran-6886_%28cropped%29.jpg/300px-Ed_Sheeran-6886_%28cropped%29.jpg",
-                    List.of("pop", "folk pop", "Ed Sheeran", "Scandinavium", "Gothenburg", "Sweden"),
+                    List.of("pop", "folkpop", "Ed Sheeran", "Scandinavium", "Gothenburg", "Sweden"),
                     12044
             ).saveEvent();
 
