@@ -59,9 +59,11 @@ public class EventService {
                     .filter(s -> !s.isEmpty())
                     .map(String::toLowerCase)
                     .collect(Collectors.toList());
-            if (tags.isEmpty()) {
-                tags = null;
-            }
+
+        }
+
+        if (tags.isEmpty()) {
+            tags = null;
         }
 
         List<String> filterTags = tags;
@@ -72,23 +74,10 @@ public class EventService {
                 .filter(event -> filterParams.getToDate() == null ||
                         event.getDate().before(filterParams.getToDate()))
                 .filter(event -> filterParams.getPerformer() == null ||
-                        event.getPerformer().equalsIgnoreCase(filterParams.getPerformer()))
+                        event.getPerformer().toLowerCase().contains(filterParams.getPerformer().toLowerCase()))
                 .filter(event -> filterParams.getLocation() == null ||
-                        event.getLocation().equalsIgnoreCase(filterParams.getLocation()))
-                // inside the stream, replace the tag filter with:
-                .filter(event -> {
-                    if (filterTags == null) return true;
-                    List<String> eventTags = event.getTags();
-                    if (eventTags == null) return false;
-                    Set<String> eventTagSet = eventTags.stream()
-                            .filter(Objects::nonNull)
-                            .map(String::trim)
-                            .filter(s -> !s.isEmpty())
-                            .map(String::toLowerCase)
-                            .collect(Collectors.toSet());
-                    return filterTags.stream().anyMatch(eventTagSet::contains);
-                })
-
+                        event.getLocation().toLowerCase().contains(filterParams.getLocation().toLowerCase()))
+                .filter(event -> tagFilterer(event, filterTags))
                 .collect(Collectors.toList());
     }
 
@@ -139,6 +128,23 @@ public class EventService {
 
         String text = "Number of updated events: " + eventsUpdated + ". " + diff + " seat discrepancies fixed.";
         return new ControllReport(updatedEventList, text);
+    }
+
+    private boolean tagFilterer(Event event, List<String> filterTags) {
+        if (filterTags == null) return true;
+
+        List<String> eventTags = event.getTags();
+        if (eventTags == null || eventTags.isEmpty()) return true;
+
+        Set<String> eventTagSet = eventTags.stream()
+                .filter(Objects::nonNull)
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .map(String::toLowerCase)
+                .collect(Collectors.toSet());
+
+
+        return filterTags.stream().anyMatch(eventTagSet::contains);
     }
 
     //FOLLOWING ADDED ONLY TO MAKE CORRECTION PROCESS EASIER
