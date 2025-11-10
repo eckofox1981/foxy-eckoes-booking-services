@@ -5,6 +5,7 @@ import ecko.fox.foxy_eckoes.security.PasswordConfig;
 import ecko.fox.foxy_eckoes.user.dto.CreateDTO;
 import ecko.fox.foxy_eckoes.user.dto.LoginDTO;
 import ecko.fox.foxy_eckoes.user.dto.UserDTO;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,7 +20,6 @@ public class UserService implements UserDetailsService {
     private final UserRepository repository;
     private final PasswordConfig passwordConfig;
     private final JWTService jwtService;
-
 
     public User createUser(CreateDTO userCreated) throws IllegalArgumentException {
         if (!passwordValidation(userCreated.getPassword(), userCreated.getPasswordConfirm())) {
@@ -100,6 +100,45 @@ public class UserService implements UserDetailsService {
         return (password.length() > 5 && password.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z0-9]+$"));
         //lower and uppercase, digit, more than 5 char
     }
+
+    //FOLLOWING ADDED ONLY TO MAKE CORRECTION PROCESS EASIER
+
+    /**
+     * creates an ADMIN user and a normal user and saves them to database upon first launch.
+     * WILL PRINT THEIR PASSWORD OBVIOUSLY NOT FOR PRODUCTION
+     */
+    @PostConstruct
+    public void createAdminAndUserIfneeded() {
+        List<User> userList = repository.findAll();
+
+        //if list completely empty assumed to be first time application is running
+        if (userList.isEmpty()) {
+            System.out.println(lines + "\nUser List empty: creating filler users...");
+            User admin = new User(
+                    UUID.randomUUID(),
+                    "admin",
+                    passwordConfig.passwordEncoder().encode("Test123"),
+                    "Bob",
+                    "Bobson",
+                    "bob.bobson@foxy-echoes.com",
+                    "admin");
+            User user = new User(
+                    UUID.randomUUID(),
+                    "charlie",
+                    passwordConfig.passwordEncoder().encode("Test123"),
+                    "Charlie",
+                    "Seinfeld",
+                    "ilovemusic@gmail.com",
+                    "user");
+            repository.save(admin);
+            repository.save(user);
+            System.out.println("Users: \"admin\" and \"charlie\" created. Passwords: \"Test123\"\n" + lines);
+        } else {
+            System.out.println(lines + "\nDatabase used before, no user created.\n"+ lines);
+        }
+    }
+
+    private String lines = "==============================================================";
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

@@ -1,5 +1,7 @@
 package ecko.fox.foxy_eckoes;
 
+import ecko.fox.foxy_eckoes.user.UserRepository;
+import ecko.fox.foxy_eckoes.user.UserService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
