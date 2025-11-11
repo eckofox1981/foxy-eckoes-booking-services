@@ -33,13 +33,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity,
                                            JWTService jwtService,
-                                           OAUth2SuccessHandler oaUth2SuccessHandler,
                                            UserRepository userRepository) throws Exception {
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         auth -> auth
+                                .requestMatchers("/", "/index.html", "/static/**", "/css/**", "/js/**", "/assets/**").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/user/create").permitAll()
                                 .requestMatchers(HttpMethod.PUT, "/user/login").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/event/filter").permitAll()
@@ -53,7 +53,6 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET, "/event/*").permitAll()
                                 .anyRequest().authenticated()
                 )
-                .oauth2Login(oAuth2 -> oAuth2.successHandler(oaUth2SuccessHandler))
                 .addFilterAfter(new JWTFilter(jwtService, userRepository), OAuth2LoginAuthenticationFilter.class);
 
         return httpSecurity.build();
@@ -67,32 +66,24 @@ public class SecurityConfig {
         return authenticationProvider;
     }
 
-    /**
-     * sets up the CORS configuration source (through Spring) to allow requests from the 127 http address
-     * a new corsconfiguration is created
-     * only requests from the http are allowed
-     * all methods are permited
-     * and allowed headers allows all header requests
-     * allow credentials allows cookies to be sent
-     *
-     * UrlBasedCorsConfigurationSource applies the rule set above
-     */
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-
-        // Alternative: Use setAllowedOriginPatterns for more flexibility
-        corsConfiguration.setAllowedOriginPatterns(List.of("*" /*TODO: change for production*/));
+        corsConfiguration.setAllowedOrigins(List.of(
+                "http://localhost",
+                "http://127.0.0.1"
+        ));
         corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD"));
         corsConfiguration.setAllowedHeaders(List.of("*"));
         corsConfiguration.setExposedHeaders(List.of("Authorization", "Content-Type"));
         corsConfiguration.setAllowCredentials(true);
         corsConfiguration.setMaxAge(3600L);
 
-        UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
-        urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
-        return urlBasedCorsConfigurationSource;
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", corsConfiguration);
+        return source;
     }
+
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {

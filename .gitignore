@@ -38,4 +38,5 @@ out/
 
 ### secret file ###
 src/main/resources/secret.txt
+.env
 

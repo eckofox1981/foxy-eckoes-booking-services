@@ -30,28 +30,6 @@ public class JWTFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
-        Authentication potentialOAUth2 = SecurityContextHolder.getContext().getAuthentication();
-
-        if (potentialOAUth2 != null) {
-            if (potentialOAUth2 instanceof OAuth2AuthenticationToken oAuth2AuthenticationToken) {
-                OAuth2User oAuth2User = oAuth2AuthenticationToken.getPrincipal();
-
-                Optional<User> optUser = userRepository.findByOpenId(oAuth2User.getName());
-
-                if (optUser.isEmpty()) {
-                    response.sendError(404, "User not found, check your token validity");
-                    return;
-                }
-
-                User user = optUser.get();
-
-                SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(
-                        user, user.getPasswordHash(), user.getAuthorities()
-                ));
-                filterChain.doFilter(request, response);
-                return;
-            }
-        }
 
         if (request.getHeader("Authorization") == null || request.getHeader("Authorization").isBlank()) {
             filterChain.doFilter(request, response);

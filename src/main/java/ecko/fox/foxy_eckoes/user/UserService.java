@@ -111,30 +111,34 @@ public class UserService implements UserDetailsService {
     public void createAdminAndUserIfneeded() {
         List<User> userList = repository.findAll();
 
-        //if list completely empty assumed to be first time application is running
-        if (userList.isEmpty()) {
-            System.out.println(lines + "\nUser List empty: creating filler users...");
-            User admin = new User(
-                    UUID.randomUUID(),
-                    "admin",
-                    passwordConfig.passwordEncoder().encode("Test123"),
-                    "Bob",
-                    "Bobson",
-                    "bob.bobson@foxy-echoes.com",
-                    "admin");
-            User user = new User(
-                    UUID.randomUUID(),
-                    "charlie",
-                    passwordConfig.passwordEncoder().encode("Test123"),
-                    "Charlie",
-                    "Seinfeld",
-                    "ilovemusic@gmail.com",
-                    "user");
-            repository.save(admin);
-            repository.save(user);
-            System.out.println("Users: \"admin\" and \"charlie\" created. Passwords: \"Test123\"\n" + lines);
-        } else {
-            System.out.println(lines + "\nDatabase used before, no user created.\n"+ lines);
+        try {
+            //if list completely empty assumed to be first time application is running
+            if (userList.isEmpty()) {
+                System.out.println(lines + "\nUser List empty: creating filler users...");
+                User admin = new User(
+                        UUID.randomUUID(),
+                        "admin",
+                        passwordConfig.passwordEncoder().encode("Test123"),
+                        "Bob",
+                        "Bobson",
+                        "bob.bobson@foxy-echoes.com",
+                        "admin");
+                User user = new User(
+                        UUID.randomUUID(),
+                        "charlie",
+                        passwordConfig.passwordEncoder().encode("Test123"),
+                        "Charlie",
+                        "Seinfeld",
+                        "ilovemusic@gmail.com",
+                        "user");
+                repository.save(admin);
+                repository.save(user);
+                System.out.println("Users: \"admin\" and \"charlie\" created. Passwords: \"Test123\"\n" + lines);
+            } else {
+                System.out.println(lines + "\nDatabase used before, no user created.\n" + lines);
+            }
+        } catch (Exception e) {
+
         }
     }
 
