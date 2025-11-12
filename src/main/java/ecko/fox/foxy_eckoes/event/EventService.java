@@ -227,7 +227,7 @@ public class EventService {
                         "Coldplay",
                         "Coldplay’s Music of the Spheres Tour is a breathtaking spectacle, with incredible visuals, and a global celebration of music.",
                         "Olympic Stadium, Helsinki, Finland",
-                        "https://upload.wikimedia.org/wikipedia/commons/9/97/Coldplay_MotS.jpg",
+                        "https://www.ekathimerini.com/wp-content/uploads/2023/10/326c3879752c10109d46e9664c1f946b_coldplay-AP-960x600.jpg",
                         List.of("rock", "pop", "Coldplay", "Helsinki", "Finland"),
                         50000
                 ).saveEvent());
@@ -237,7 +237,7 @@ public class EventService {
                         "Imagine Dragons",
                         "Experience the electrifying performance of Imagine Dragons as they bring their chart-topping hits to Europe.",
                         "Friends Arena, Stockholm, Sweden",
-                        "https://upload.wikimedia.org/wikipedia/commons/3/37/Imagine_Dragons_2019.jpg",
+                        "https://www.udiscovermusic.com/wp-content/uploads/2019/11/Imagine-Dragons-GettyImages-942804922-1000x600.jpg",
                         List.of("poprock", "alternativerock", "ImagineDragons", "Stockholm", "Sweden"),
                         32000
                 ).saveEvent());
@@ -247,7 +247,7 @@ public class EventService {
                         "BTS",
                         "BTS returns for an unforgettable night of music, dance, and performances that have made them global superstars.",
                         "Croke Park, Dublin, Ireland",
-                        "https://upload.wikimedia.org/wikipedia/commons/3/3e/BTS_Concert.jpg",
+                        "https://www.nme.com/wp-content/uploads/2022/10/BTS-_Yet-To-Come_-in-BUSAN_7-1.jpg",
                         List.of("kpop", "bts", "Dublin", "Ireland"),
                         75000
                 ).saveEvent());
@@ -257,7 +257,7 @@ public class EventService {
                         "Adele",
                         "Adele’s stunning voice and powerful ballads will leave you speechless in her live tour experience.",
                         "Wembley Stadium, London, UK",
-                        "https://upload.wikimedia.org/wikipedia/commons/d/db/Adele_2016.jpg",
+                        "https://www.billboard.com/wp-content/uploads/2024/08/adele-munich-2024-billboard-1548.jpg?w=942&h=623&crop=1",
                         List.of("pop", "soul", "Adele", "London", "UK"),
                         90000
                 ).saveEvent());
