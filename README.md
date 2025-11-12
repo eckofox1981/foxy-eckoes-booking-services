@@ -1,6 +1,6 @@
 **School project, part of a web-development course.**
 
-<img src="./logo/F-E-logo-title-300px.png" margin-left=10px width="100" alt="Foxy-Eckoes logo"> # Foxy-Eckoes Booking System 
+# <img src="./logo/F-E-logo-title-300px.png" margin-left=10px width="100" alt="Foxy-Eckoes logo">  Foxy-Eckoes Booking System 
 ___
 ## Description
 
