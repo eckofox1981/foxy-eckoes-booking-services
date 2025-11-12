@@ -29,6 +29,7 @@ services:
     depends_on:
       - foxydb
       - foxybackend1
+      ## waits for foxybackend1 to avoid duplicate events and users to be created
 
   load-balancer:
     image: nginx:1.29.3
