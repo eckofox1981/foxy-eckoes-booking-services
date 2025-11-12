@@ -27,7 +27,6 @@ services:
     networks:
       - app-network
     depends_on:
-      - foxydb
       - foxybackend1
       ## waits for foxybackend1 to avoid duplicate events and users to be created
 
