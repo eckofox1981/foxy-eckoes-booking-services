@@ -161,6 +161,7 @@ public class EventService {
             //if list completely empty assumed to be first time application is running
             if (eventList.isEmpty()) {
                 System.out.println(lines + "\nEvent List empty: creating filler events...");
+
                 repository.save(new NewEventDTO(
                         new Date(1732478400000L), // 2025-11-24T20:00:00Z
                         "The Rolling Stones",
@@ -172,7 +173,7 @@ public class EventService {
                 ).saveEvent());
 
                 repository.save(new NewEventDTO(
-                        new Date(1731873600000L), // 2025-11-17T20:00:00Z
+                        new Date(1733280000000L), // 2025-12-01T20:00:00Z
                         "Billie Eilish",
                         "The multi-Grammy winner brings her haunting vocals and captivating stage presence on her world tour.",
                         "Royal Arena, Copenhagen, Denmark",
@@ -182,7 +183,7 @@ public class EventService {
                 ).saveEvent());
 
                 repository.save(new NewEventDTO(
-                        new Date(1733079000000L), // 2025-12-01T18:30:00Z
+                        new Date(1734375600000L), // 2025-12-15T18:30:00Z
                         "Taylor Swift",
                         "The Eras Tour continues! Experience a spectacular journey through Taylor's entire discography with stunning visuals and surprise songs.",
                         "Parken Stadium, Copenhagen, Denmark",
@@ -192,7 +193,7 @@ public class EventService {
                 ).saveEvent());
 
                 repository.save(new NewEventDTO(
-                        new Date(1733688000000L), // 2025-12-08T20:00:00Z
+                        new Date(1734980400000L), // 2025-12-29T20:00:00Z
                         "Foo Fighters",
                         "Rock royalty Foo Fighters bring their high-energy performance and decades of hits to Scandinavia.",
                         "Hartwall Arena, Helsinki, Finland",
@@ -202,7 +203,7 @@ public class EventService {
                 ).saveEvent());
 
                 repository.save(new NewEventDTO(
-                        new Date(1732474800000L), // 2025-11-24T19:00:00Z
+                        new Date(1735861200000L), // 2026-01-24T19:00:00Z
                         "Metallica",
                         "Heavy metal legends deliver an explosive evening of thrash metal classics and new material from their 72 Seasons album.",
                         "Telenor Arena, Oslo, Norway",
@@ -212,13 +213,53 @@ public class EventService {
                 ).saveEvent());
 
                 repository.save(new NewEventDTO(
-                        new Date(1734289800000L), // 2025-12-15T19:30:00Z
+                        new Date(1737735600000L), // 2026-02-10T19:30:00Z
                         "Ed Sheeran",
                         "The Mathematics Tour brings Ed Sheeran's intimate storytelling and loop pedal mastery to the stage with songs spanning his entire career.",
                         "Scandinavium, Gothenburg, Sweden",
                         "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Ed_Sheeran-6886_%28cropped%29.jpg/300px-Ed_Sheeran-6886_%28cropped%29.jpg",
                         List.of("pop", "folkpop", "Ed Sheeran", "Scandinavium", "Gothenburg", "Sweden"),
                         12044
+                ).saveEvent());
+
+                repository.save(new NewEventDTO(
+                        new Date(1740474000000L), // 2026-03-01T20:00:00Z
+                        "Coldplay",
+                        "Coldplay’s Music of the Spheres Tour is a breathtaking spectacle, with incredible visuals, and a global celebration of music.",
+                        "Olympic Stadium, Helsinki, Finland",
+                        "https://upload.wikimedia.org/wikipedia/commons/9/97/Coldplay_MotS.jpg",
+                        List.of("rock", "pop", "Coldplay", "Helsinki", "Finland"),
+                        50000
+                ).saveEvent());
+
+                repository.save(new NewEventDTO(
+                        new Date(1742036400000L), // 2026-03-25T20:00:00Z
+                        "Imagine Dragons",
+                        "Experience the electrifying performance of Imagine Dragons as they bring their chart-topping hits to Europe.",
+                        "Friends Arena, Stockholm, Sweden",
+                        "https://upload.wikimedia.org/wikipedia/commons/3/37/Imagine_Dragons_2019.jpg",
+                        List.of("poprock", "alternativerock", "ImagineDragons", "Stockholm", "Sweden"),
+                        32000
+                ).saveEvent());
+
+                repository.save(new NewEventDTO(
+                        new Date(1745762400000L), // 2026-04-15T19:00:00Z
+                        "BTS",
+                        "BTS returns for an unforgettable night of music, dance, and performances that have made them global superstars.",
+                        "Croke Park, Dublin, Ireland",
+                        "https://upload.wikimedia.org/wikipedia/commons/3/3e/BTS_Concert.jpg",
+                        List.of("kpop", "bts", "Dublin", "Ireland"),
+                        75000
+                ).saveEvent());
+
+                repository.save(new NewEventDTO(
+                        new Date(1746241200000L), // 2026-04-29T20:00:00Z
+                        "Adele",
+                        "Adele’s stunning voice and powerful ballads will leave you speechless in her live tour experience.",
+                        "Wembley Stadium, London, UK",
+                        "https://upload.wikimedia.org/wikipedia/commons/d/db/Adele_2016.jpg",
+                        List.of("pop", "soul", "Adele", "London", "UK"),
+                        90000
                 ).saveEvent());
 
                 System.out.println("Filler events created \n" + lines);
@@ -228,6 +269,7 @@ public class EventService {
         } catch (Exception e) {
             System.out.println("Could not create filler users but all is good.");
         }
+
     }
 
     private String lines = "==============================================================";
