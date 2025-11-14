@@ -6,6 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import java.io.*;
 import java.time.Instant;
@@ -20,8 +21,8 @@ public class JWTService {
     private final JWTVerifier verifier;
 
     @Autowired
-    public JWTService() {
-        this.secretString = setSecretString();
+    public JWTService(@Value("${secret.string}") String secretString) {
+        this.secretString = secretString;
         this.algorithm = Algorithm.HMAC256(secretString);
         this.verifier = JWT.require(algorithm)
                 .withIssuer("auth0")
@@ -48,15 +49,5 @@ public class JWTService {
      *
      * @return secret string for algorithm
      */
-    private String setSecretString() {
-        try {
-            var secret = getClass().getResourceAsStream("/secret.txt");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(secret));
-            return reader.readLine();
-        } catch (IOException e) {
-            System.err.println("Error: secret string not found. The Application has shutdown.\n" + e.getMessage());
-            System.exit(0);
-            return null; //will never be accessed (shutdown above) but the IDE requires a return statement.
-        }
-    }
+
 }
