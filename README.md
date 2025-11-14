@@ -27,6 +27,11 @@ ___
 - Postgres database
 ___
 ## Useful information
+Before running in docker compose, use the *ENV-TEMPLATE* to create a *.env* file (leave it in the root folder).
+
+The project is set up for java 25, it can be changed in *build.gradle.kts* (line 13).
+
+
 On initial start-up the server creates filler events and filler users.
 The users created are:
 - admin:
