@@ -37,10 +37,7 @@ public class User implements UserDetails {
     private List<Booking> bookings;
     @Column
     private String role;
-    @Column
-    private String openId;
-    @Column
-    private String openIdProvider;
+
 
     public User(UUID userID, String username, String passwordHash, String firstName, String lastName, String email, String role) {
         this.userID = userID;
@@ -50,16 +47,12 @@ public class User implements UserDetails {
         this.lastName = lastName;
         this.email = email;
         this.role = role;
-        this.openId = "";
-        this.openIdProvider = "none";
         this.bookings = new ArrayList<>();
     }
 
     public User(UUID userID, String username, String openId, String openIdProvider) {
         this.userID = userID;
         this.username = username;
-        this.openId = openId;
-        this.openIdProvider = openIdProvider;
     }
 
     @Override
