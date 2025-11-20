@@ -204,7 +204,7 @@ public class EventService {
                 System.out.println(lines + "\nEvent List empty: creating filler events...");
 
                 repository.save(new NewEventDTO(
-                        new Date(1732478400000L), // 2025-11-24T20:00:00Z
+                        new Date(1764612000000L),
                         "The Rolling Stones",
                         "The Mosty Not Dead Tour: even though iconic drummer Charlie Watts died four years ago, the rest of the band are still grabbing their walker to deambulate onto a stage near you",
                         "Scandinavium, Gothenburg, Sweden",
@@ -214,7 +214,7 @@ public class EventService {
                 ).saveEvent());
 
                 repository.save(new NewEventDTO(
-                        new Date(1733280000000L), // 2025-12-01T20:00:00Z
+                        new Date(1765306800000L),
                         "Billie Eilish",
                         "The multi-Grammy winner brings her haunting vocals and captivating stage presence on her world tour.",
                         "Royal Arena, Copenhagen, Denmark",
@@ -224,7 +224,7 @@ public class EventService {
                 ).saveEvent());
 
                 repository.save(new NewEventDTO(
-                        new Date(1734375600000L), // 2025-12-15T18:30:00Z
+                        new Date(1765814400000L),
                         "Taylor Swift",
                         "The Eras Tour continues! Experience a spectacular journey through Taylor's entire discography with stunning visuals and surprise songs.",
                         "Parken Stadium, Copenhagen, Denmark",
@@ -234,9 +234,9 @@ public class EventService {
                 ).saveEvent());
 
                 repository.save(new NewEventDTO(
-                        new Date(1734980400000L), // 2025-12-29T20:00:00Z
+                        new Date(1766692800000L),
                         "Foo Fighters",
-                        "Rock royalty Foo Fighters bring their high-energy performance and decades of hits to Scandinavia.",
+                        "Rock royalty Foo Fighters bring their high-energy performance and decades of hits to Scandinavia. Right on time for X-mas!",
                         "Hartwall Arena, Helsinki, Finland",
                         "https://media.gettyimages.com/id/75264785/photo/london-dave-grohl-of-foo-fighters-performs-on-stage-during-the-live-earth-concert-at-wembley.jpg?s=612x612&w=0&k=20&c=hovSzNq6xO9OhOrt56LWVGtCclJHbdazS39PA_qeANI=",
                         List.of("rock", "alternativerock", "FooFighters", "Helsinki", "Finland", "DaveGrohl"),
@@ -244,7 +244,7 @@ public class EventService {
                 ).saveEvent());
 
                 repository.save(new NewEventDTO(
-                        new Date(1735861200000L), // 2026-01-24T19:00:00Z
+                        new Date(1768075200000L),
                         "Metallica",
                         "Heavy metal legends deliver an explosive evening of thrash metal classics and new material from their 72 Seasons album.",
                         "Telenor Arena, Oslo, Norway",
@@ -254,7 +254,7 @@ public class EventService {
                 ).saveEvent());
 
                 repository.save(new NewEventDTO(
-                        new Date(1737735600000L), // 2026-02-10T19:30:00Z
+                        new Date(1768672800000L),
                         "Ed Sheeran",
                         "The Mathematics Tour brings Ed Sheeran's intimate storytelling and loop pedal mastery to the stage with songs spanning his entire career.",
                         "Scandinavium, Gothenburg, Sweden",
@@ -264,7 +264,7 @@ public class EventService {
                 ).saveEvent());
 
                 repository.save(new NewEventDTO(
-                        new Date(1740474000000L), // 2026-03-01T20:00:00Z
+                        new Date(1769281200000L),
                         "Coldplay",
                         "Coldplay’s Music of the Spheres Tour is a breathtaking spectacle, with incredible visuals, and a global celebration of music.",
                         "Olympic Stadium, Helsinki, Finland",
@@ -274,7 +274,7 @@ public class EventService {
                 ).saveEvent());
 
                 repository.save(new NewEventDTO(
-                        new Date(1742036400000L), // 2026-03-25T20:00:00Z
+                        new Date(1769799600000L),
                         "Imagine Dragons",
                         "Experience the electrifying performance of Imagine Dragons as they bring their chart-topping hits to Europe.",
                         "Friends Arena, Stockholm, Sweden",
@@ -284,7 +284,7 @@ public class EventService {
                 ).saveEvent());
 
                 repository.save(new NewEventDTO(
-                        new Date(1745762400000L), // 2026-04-15T19:00:00Z
+                        new Date(1770476400000L),
                         "BTS",
                         "BTS returns for an unforgettable night of music, dance, and performances that have made them global superstars.",
                         "Croke Park, Dublin, Ireland",
@@ -294,7 +294,7 @@ public class EventService {
                 ).saveEvent());
 
                 repository.save(new NewEventDTO(
-                        new Date(1746241200000L), // 2026-04-29T20:00:00Z
+                        new Date(1772305200000L),
                         "Adele",
                         "Adele’s stunning voice and powerful ballads will leave you speechless in her live tour experience.",
                         "Wembley Stadium, London, UK",
