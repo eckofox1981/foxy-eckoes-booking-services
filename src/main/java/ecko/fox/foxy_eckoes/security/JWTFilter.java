@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -44,7 +45,8 @@ public class JWTFilter extends OncePerRequestFilter {
             return;
         }
 
-        User user = userRepository.findById(userID).get();
+        User user = userRepository.findById(userID)
+                .orElseThrow(() -> new NoSuchElementException("Error: user not found"));
 
         SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(
                 user, user.getPasswordHash(), user.getAuthorities()
