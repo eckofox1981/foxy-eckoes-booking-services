@@ -20,6 +20,8 @@ services:
     depends_on:
       - foxydb
 
+  ## waits for foxybackend1 to avoid duplicate sample events (see EventService) and users to be created
+  ## a production version would have the same depends_on-setting as foxybackend1.
   foxybackend2:
     image: foxyeckoesapi:0.1
     environment:
@@ -30,7 +32,7 @@ services:
       - app-network
     depends_on:
       - foxybackend1
-      ## waits for foxybackend1 to avoid duplicate events and users to be created
+
 
   load-balancer:
     image: nginx:1.29.3

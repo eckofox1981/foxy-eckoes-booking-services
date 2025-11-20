@@ -127,6 +127,7 @@ public class EventService {
         List<String> updatedEventList = new ArrayList<>();
         int eventsUpdated = 0;
         int diff = 0;
+
         for (Event event : allEvents) {
             int thisDiff = event.seatAvailabilityControl();
             if (thisDiff > 0) {
