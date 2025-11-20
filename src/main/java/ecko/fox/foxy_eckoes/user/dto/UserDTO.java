@@ -21,7 +21,6 @@ public class UserDTO {
     private String email;
     private List<BookingDTO> bookings;
     private String role;
-    private String openIdProvider;
 
     public static UserDTO fromUser(User user) {
         return new UserDTO(
@@ -35,8 +34,7 @@ public class UserDTO {
                         .map((BookingDTO::fromBooking))
                         .sorted(Comparator.comparing(booking -> booking.getEvent().getDate()))
                         .toList(),
-                user.getRole(),
-                user.getOpenIdProvider()
+                user.getRole()
         );
 
     }
