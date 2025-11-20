@@ -24,7 +24,7 @@ public class EventController {
             EventDTO eventDTO = EventDTO.fromEvent(service.createEvent(newEvent));
             return ResponseEntity.ok(eventDTO);
         }  catch (Exception e) {
-            return ResponseEntity.badRequest().body("Could not create event: " + e.getMessage());
+            return ResponseEntity.internalServerError().body("Could not create event: " + e.getMessage());
         }
     }
 
@@ -39,7 +39,7 @@ public class EventController {
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(404).body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }
 
@@ -52,7 +52,7 @@ public class EventController {
                     .toList();
             return ResponseEntity.ok(eventDTOs);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }
 
@@ -64,7 +64,7 @@ public class EventController {
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(404).body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }
 
@@ -75,7 +75,7 @@ public class EventController {
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(404).body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }
 
@@ -85,7 +85,7 @@ public class EventController {
             EventDTO eventDTO = EventDTO.fromEvent(service.updateSeatsLefts(eventID, seatsBooked));
             return ResponseEntity.ok(eventDTO);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }
 
@@ -95,7 +95,7 @@ public class EventController {
             EventDTO eventDTO = EventDTO.fromEvent(service.updateEvent(eventToUpdate));
             return ResponseEntity.ok(eventDTO);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }
 
@@ -104,7 +104,7 @@ public class EventController {
         try {
             return ResponseEntity.ok(service.seatAvailabilityControlAllEvent());
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }
 }

@@ -32,7 +32,7 @@ public class UserController {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(406).body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }
 
@@ -43,7 +43,7 @@ public class UserController {
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(403).body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }
 
@@ -66,7 +66,7 @@ public class UserController {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(403).body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }
 
@@ -75,7 +75,7 @@ public class UserController {
         try {
             return ResponseEntity.status(204).body(service.deleteUser(user));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Deletion error: " + e.getMessage());
+            return ResponseEntity.internalServerError().body("Deletion error: " + e.getMessage());
         }
     }
 
@@ -84,7 +84,7 @@ public class UserController {
         try {
             return ResponseEntity.ok(service.getAllUserIDAndUserName());
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }
 
@@ -95,7 +95,7 @@ public class UserController {
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(404).body("Error fetching user:" + e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error fetching user:" + e.getMessage());
+            return ResponseEntity.internalServerError().body("Error fetching user:" + e.getMessage());
         }
     }
 }

@@ -27,7 +27,7 @@ public class BookingController {
         } catch (IllegalQueryOperationException e) {
             return ResponseEntity.status(409).body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error while booking: " + e.getMessage());
+            return ResponseEntity.internalServerError().body("Error while booking: " + e.getMessage());
         }
     }
 
@@ -41,7 +41,7 @@ public class BookingController {
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(404).body("Not found:" + e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Could not fetch booking:" + e.getMessage());
+            return ResponseEntity.internalServerError().body("Could not fetch booking:" + e.getMessage());
         }
     }
 
@@ -54,7 +54,7 @@ public class BookingController {
                     .toList();
             return ResponseEntity.ok(bookings);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Could not fetch booking:" + e.getMessage());
+            return ResponseEntity.internalServerError().body("Could not fetch booking:" + e.getMessage());
         }
     }
 
@@ -67,7 +67,7 @@ public class BookingController {
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(404).body("Error cancelling: " + e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error cancelling: " + e.getMessage());
+            return ResponseEntity.internalServerError().body("Error cancelling: " + e.getMessage());
         }
     }
 
@@ -80,7 +80,7 @@ public class BookingController {
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(404).body("Error cancelling: " + e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error cancelling: " + e.getMessage());
+            return ResponseEntity.internalServerError().body("Error cancelling: " + e.getMessage());
         }
     }
 
@@ -109,7 +109,7 @@ public class BookingController {
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(404).body("Error finding bookings:" + e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error finding bookings:" + e.getMessage());
+            return ResponseEntity.internalServerError().body("Error finding bookings:" + e.getMessage());
         }
     }
 }
