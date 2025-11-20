@@ -113,6 +113,15 @@ public class EventService {
         return repository.save(event);
     }
 
+    /**
+     * ADMIN ONLY functions
+     * checks through all bookings and counts the number of seats booked for each event and compares them
+     * to the recorded seatsAvailable.
+     * If there is a difference (at the time of writing only due to testing though modifying database directly),
+     * the event is updated to the number of seats booked.
+     * Each difference is recorded and a report is compiled.
+     * @return a ControllReport with all the changes made to the event's seatAvailibility
+     */
     public ControllReport seatAvailabilityControlAllEvent() {
         List<Event> allEvents = repository.findAll();
         List<String> updatedEventList = new ArrayList<>();
