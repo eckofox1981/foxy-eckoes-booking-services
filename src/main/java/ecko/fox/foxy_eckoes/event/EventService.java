@@ -71,16 +71,13 @@ public class EventService {
         List<String> filterTags = tags;
 
         return events.stream()
-                .filter(event -> filterParams.getFromDate() == null ||
-                        event.getDate().after(filterParams.getFromDate()))
-                .filter(event -> filterParams.getToDate() == null ||
-                        event.getDate().before(filterParams.getToDate()))
-                .filter(event -> filterParams.getPerformer() == null ||
-                        event.getPerformer().toLowerCase().contains(filterParams.getPerformer().toLowerCase()))
-                .filter(event -> filterParams.getLocation() == null ||
-                        event.getLocation().toLowerCase().contains(filterParams.getLocation().toLowerCase()))
-                .filter(event -> tagFilterer(event, filterTags))
-                .collect(Collectors.toList());
+            .filter(event ->
+                fromDateFilter(event, filterParams.getFromDate()) &&
+                toDateFilter(event, filterParams.getToDate()) &&
+                performerFilter(event, filterParams.getPerformer()) &&
+                locationFilter(event, filterParams.getLocation()) &&
+                tagFilterer(event, filterTags))
+            .collect(Collectors.toList());
     }
 
     public Event getEventById(UUID eventId) throws NoSuchElementException {
@@ -141,6 +138,40 @@ public class EventService {
         String text = "Number of updated events: " + eventsUpdated + ". " + diff + " seat discrepancies fixed.";
         return new ControllReport(updatedEventList, text);
     }
+
+    private boolean fromDateFilter(Event event, Date fromDate) {
+        if (fromDate == null) {
+            return true;
+        }
+
+        return event.getDate().after(fromDate);
+    }
+
+    private boolean toDateFilter(Event event, Date toDate) {
+        if (toDate == null) {
+            return true;
+        }
+
+        return event.getDate().before(toDate);
+    }
+
+    private boolean performerFilter(Event event, String performer) {
+        if (performer == null || performer.isEmpty()) {
+            return true;
+        }
+
+        return event.getPerformer().toLowerCase().contains(performer.toLowerCase());
+    }
+
+    private boolean locationFilter(Event event, String location) {
+        if (location == null || location.isEmpty()) {
+            return true;
+        }
+
+        return event.getLocation().toLowerCase().contains(location.toLowerCase());
+    }
+
+
 
     private boolean tagFilterer(Event event, List<String> filterTags) {
         if (filterTags == null) return true;
